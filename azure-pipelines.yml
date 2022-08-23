@@ -8,20 +8,20 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
- -task: Copyfiles@2
-  Inpute:
-  SourceFolder: 'quickstarts/microsoft.web/webapp-linux-managed-mysql'
-  Contents: '**'
-  TargetFolder: '$(Build.ArtifactStagingDirectory)'
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'quickstarts/microsoft.web/webapp-linux-managed-mysql/'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'Mango(1)(40ef2aec-7a53-4376-ba68-76b93cbdbfdb)'
-    subscriptionId: '40ef2aec-7a53-4376-ba68-76b93cbdbfdb'
+    azureResourceManagerConnection: '<your-resource-manager-connection>'
+    subscriptionId: '<your-subscription-id>'
     action: 'Create Or Update Resource Group'
-    resourceGroupName: 'SQLdeployemnt'
-    location: 'East US'
+    resourceGroupName: 'ARMPipelinesLAMP-rg'
+    location: '<your-closest-location>'
     templateLocation: 'Linked artifact'
     csmFile: '$(Build.ArtifactStagingDirectory)/azuredeploy.json'
     csmParametersFile: '$(Build.ArtifactStagingDirectory)/azuredeploy.parameters.json'
